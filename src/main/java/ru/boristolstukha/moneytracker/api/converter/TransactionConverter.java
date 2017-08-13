@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.boristolstukha.moneytracker.api.dto.TransactionDTO;
 import ru.boristolstukha.moneytracker.entity.Transaction;
 
+import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -15,7 +16,7 @@ public class TransactionConverter {
         dto.id = entity.getId();
         dto.description = entity.getDescription();
         dto.amount = entity.getAmount();
-        dto.date = entity.getDate();
+        dto.date = new Date(entity.getDate().getTime());
         return dto;
     }
 
