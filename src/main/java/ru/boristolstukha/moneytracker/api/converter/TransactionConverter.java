@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.boristolstukha.moneytracker.api.dto.TransactionDTO;
 import ru.boristolstukha.moneytracker.entity.Transaction;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -15,7 +16,7 @@ public class TransactionConverter {
         TransactionDTO dto = new TransactionDTO();
         dto.id = entity.getId();
         dto.description = entity.getDescription();
-        dto.amount = entity.getAmount();
+        dto.amount = BigDecimal.valueOf(entity.getAmount());
         dto.date = new Date(entity.getDate().getTime());
         return dto;
     }
@@ -27,7 +28,7 @@ public class TransactionConverter {
 
     public Transaction updateEntity(Transaction entity, TransactionDTO dto){
         entity.setDescription(dto.description);
-        entity.setAmount(dto.amount);
+        entity.setAmount(dto.amount.doubleValue());
         entity.setDate(dto.date);
         return entity;
     }

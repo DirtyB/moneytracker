@@ -9,6 +9,8 @@ import ru.boristolstukha.moneytracker.api.exception.HttpNotFoundException;
 import ru.boristolstukha.moneytracker.entity.Transaction;
 import ru.boristolstukha.moneytracker.repository.TransactionRepository;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
@@ -37,14 +39,14 @@ public class TransactionController {
     }
 
     @RequestMapping(path = "", method = {RequestMethod.POST, RequestMethod.PUT})
-    public TransactionDTO putTransaction(@RequestBody TransactionDTO transactionDTO) {
+    public TransactionDTO putTransaction(@Valid @RequestBody TransactionDTO transactionDTO) {
         Transaction transaction = transactionConverter.DTOToEntity(transactionDTO);
         transactionRepository.save(transaction);
         return transactionConverter.entityToDTO(transaction);
     }
 
     @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PUT})
-    public TransactionDTO updateTransaction(@RequestBody TransactionDTO transactionDTO,
+    public TransactionDTO updateTransaction(@Valid @RequestBody TransactionDTO transactionDTO,
                                             @PathVariable(name = "id") Long id) throws HttpNotFoundException {
         Transaction transaction = findEntity(id);
         transactionConverter.updateEntity(transaction, transactionDTO);
