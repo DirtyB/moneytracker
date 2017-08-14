@@ -54,6 +54,12 @@ public class TransactionController {
         return transactionConverter.entityToDTO(transaction);
     }
 
+    @RequestMapping(path = "/{id}", method = {RequestMethod.DELETE})
+    public void deleteTransaction(@PathVariable(name = "id") Long id) throws HttpNotFoundException {
+        Transaction transaction = findEntity(id);
+        transactionRepository.delete(transaction);
+    }
+
     private Transaction findEntity(Long id) throws HttpNotFoundException {
         Transaction transaction = transactionRepository.findOne(id);
         if (transaction == null) {
