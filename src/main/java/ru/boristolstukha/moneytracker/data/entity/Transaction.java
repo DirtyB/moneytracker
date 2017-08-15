@@ -1,4 +1,4 @@
-package ru.boristolstukha.moneytracker.entity;
+package ru.boristolstukha.moneytracker.data.entity;
 
 import javax.persistence.*;
 import java.util.Date;

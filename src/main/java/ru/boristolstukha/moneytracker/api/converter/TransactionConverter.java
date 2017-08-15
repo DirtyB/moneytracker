@@ -2,7 +2,7 @@ package ru.boristolstukha.moneytracker.api.converter;
 
 import org.springframework.stereotype.Service;
 import ru.boristolstukha.moneytracker.api.dto.TransactionDTO;
-import ru.boristolstukha.moneytracker.entity.Transaction;
+import ru.boristolstukha.moneytracker.data.entity.Transaction;
 
 import java.math.BigDecimal;
 import java.util.Date;

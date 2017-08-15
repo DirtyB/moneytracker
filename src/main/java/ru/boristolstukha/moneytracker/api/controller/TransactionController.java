@@ -2,12 +2,14 @@ package ru.boristolstukha.moneytracker.api.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import ru.boristolstukha.moneytracker.api.converter.TransactionConverter;
 import ru.boristolstukha.moneytracker.api.dto.TransactionDTO;
 import ru.boristolstukha.moneytracker.api.exception.HttpNotFoundException;
-import ru.boristolstukha.moneytracker.entity.Transaction;
-import ru.boristolstukha.moneytracker.repository.TransactionRepository;
+import ru.boristolstukha.moneytracker.data.entity.Transaction;
+import ru.boristolstukha.moneytracker.data.repository.TransactionRepository;
 
 import javax.validation.Valid;
 
@@ -15,8 +17,8 @@ import javax.validation.Valid;
 @RequestMapping("/api/transactions")
 public class TransactionController {
 
-    final private TransactionRepository transactionRepository;
-    final private TransactionConverter transactionConverter;
+    private final TransactionRepository transactionRepository;
+    private final TransactionConverter transactionConverter;
     @Autowired
     ObjectMapper objectMapper;
 
@@ -27,10 +29,12 @@ public class TransactionController {
     }
 
     @GetMapping("")
-    public Iterable<TransactionDTO> getTransactions() {
-        Iterable<Transaction> transactions = transactionRepository.findAll();
+    public Iterable<TransactionDTO> getTransactions(@PageableDefault(size = 4) Pageable pageable) {
+        System.out.println(pageable);
+        Iterable<Transaction> transactions = transactionRepository.findAll(pageable);
         return transactionConverter.EntityListToDTOList(transactions);
     }
+
 
     @GetMapping("/{id}")
     public TransactionDTO getTransaction(@PathVariable(name = "id") Long id) throws HttpNotFoundException {
@@ -45,7 +49,7 @@ public class TransactionController {
         return transactionConverter.entityToDTO(transaction);
     }
 
-    @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PUT})
+    @RequestMapping(path = "/{id}", method = {RequestMethod.POST, RequestMethod.PUT, RequestMethod.PATCH})
     public TransactionDTO updateTransaction(@Valid @RequestBody TransactionDTO transactionDTO,
                                             @PathVariable(name = "id") Long id) throws HttpNotFoundException {
         Transaction transaction = findEntity(id);
@@ -63,7 +67,7 @@ public class TransactionController {
     private Transaction findEntity(Long id) throws HttpNotFoundException {
         Transaction transaction = transactionRepository.findOne(id);
         if (transaction == null) {
-            throw new HttpNotFoundException();
+            throw new HttpNotFoundException("Transaction with ID " + id + " does not exist");
         }
         return transaction;
     }
