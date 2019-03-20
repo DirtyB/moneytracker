@@ -15,6 +15,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/transactions")
+@CrossOrigin
 public class TransactionController {
 
     private final TransactionRepository transactionRepository;

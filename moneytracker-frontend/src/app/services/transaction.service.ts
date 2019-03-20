@@ -1,20 +1,25 @@
 import {Injectable} from '@angular/core';
 import {Transaction} from "../models/Transaction";
-import {TRANSACTIONS} from "../mock-transactions";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
 
-  constructor() { }
+  private url = "http://localhost:8080/api/transactions";
+
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getTransactions(): Observable<Transaction[]> {
-    return of(TRANSACTIONS);
+    return this.http.get<Transaction[]>(this.url);
   }
 
   getTransaction(id: number): Observable<Transaction> {
-    return of(TRANSACTIONS.find(transaction => transaction.id === id));
+    return this.http.get<Transaction>(this.url+'/'+id);
+
   }
 }
