@@ -1,0 +1,15 @@
+<div *ngIf="transaction">
+  <p>
+    <label>Amount:</label>
+    <input [(ngModel)]="transaction.amount" placeholder="How much monty did you spend?"/>
+  </p>
+  <p>
+    <label>Description:</label>
+    <input [(ngModel)]="transaction.description" placeholder="What did your spend your money to?"/>
+  </p>
+  <p>
+    <label>Date:</label>
+    <input [(ngModel)]="transaction.date" placeholder="When did it happen?"/>
+  </p>
+</div>
+<button (click)="goBack()">Go back</button>

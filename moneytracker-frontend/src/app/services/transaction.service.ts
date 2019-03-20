@@ -10,7 +10,11 @@ export class TransactionService {
 
   constructor() { }
 
-  getHeroes(): Observable<Transaction[]> {
+  getTransactions(): Observable<Transaction[]> {
     return of(TRANSACTIONS);
+  }
+
+  getTransaction(id: number): Observable<Transaction> {
+    return of(TRANSACTIONS.find(transaction => transaction.id === id));
   }
 }

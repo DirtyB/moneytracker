@@ -1,6 +1,8 @@
 <h2>My transactions</h2>
 <ul class="transactions">
   <li *ngFor="let transaction of transactions">
-    <span class="badge">{{transaction.amount}}</span> {{transaction.date}}  {{transaction.description}}
+    <a routerLink="/transactions/{{transaction.id}}">
+      <span class="badge">{{transaction.amount}}</span> {{transaction.date}}  {{transaction.description}}
+    </a>
   </li>
 </ul>

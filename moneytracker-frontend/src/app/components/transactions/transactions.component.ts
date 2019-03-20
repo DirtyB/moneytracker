@@ -13,13 +13,13 @@ export class TransactionsComponent implements OnInit {
 
   constructor(private transactionService: TransactionService) { }
 
-  getHeroes(): void {
-    this.transactionService.getHeroes()
+  getTransactions(): void {
+    this.transactionService.getTransactions()
       .subscribe(transactions => this.transactions = transactions);
   }
 
   ngOnInit() {
-    this.getHeroes();
+    this.getTransactions();
   }
 
 }
