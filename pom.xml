@@ -6,7 +6,7 @@
 	<groupId>ru.boristolstukha</groupId>
 	<artifactId>moneytracker</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 
 	<name>moneytracker</name>
 	<description>Demo project for Spring Boot</description>

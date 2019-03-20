@@ -11,6 +11,7 @@ public class MoneytrackerApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		//todo: make test not depend on DB server running
 	}
 
 }
