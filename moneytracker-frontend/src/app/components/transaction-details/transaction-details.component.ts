@@ -29,6 +29,11 @@ export class TransactionDetailsComponent implements OnInit {
     this.location.back();
   }
 
+  save(): void{
+    this.transactionService.updateTransaction(this.transaction)
+      .subscribe(() => this.goBack());
+  }
+
   ngOnInit() {
     this.getTransaction();
   }

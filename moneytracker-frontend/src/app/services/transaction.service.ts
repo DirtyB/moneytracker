@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Transaction} from "../models/Transaction";
-import {Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import {Observable, of} from "rxjs";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,43 @@ export class TransactionService {
   ) { }
 
   getTransactions(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(this.url);
+    return this.http.get<Transaction[]>(this.url)
+      .pipe(
+        catchError(this.handleError<Transaction[]>([]))
+      );
   }
 
   getTransaction(id: number): Observable<Transaction> {
-    return this.http.get<Transaction>(this.url+'/'+id);
-
+    return this.http.get<Transaction>(this.url+'/'+id)
+      .pipe(
+        catchError(this.handleError<Transaction>())
+      );
   }
+
+  updateTransaction(transaction: Transaction): Observable<Transaction> {
+    return this.http.post<Transaction>(
+        this.url+'/'+transaction.id,
+        transaction,
+      )
+      .pipe(
+        catchError(this.handleError<Transaction>())
+      );
+  }
+
+  /**
+   * Handle Http operation that failed.
+   * Let the app continue.
+   * @param result? - optional value to return as the observable result
+   */
+  private handleError<T>(result?: T) {
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.error(error); // log to console instead
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T);
+    };
+  }
+
 }
