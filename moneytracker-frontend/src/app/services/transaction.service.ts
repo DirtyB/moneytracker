@@ -29,9 +29,10 @@ export class TransactionService {
       );
   }
 
-  updateTransaction(transaction: Transaction): Observable<Transaction> {
+  saveTransaction(transaction: Transaction): Observable<Transaction> {
+    const url = this.url + ( transaction.id === null ? '' :  '/'+transaction.id );
     return this.http.post<Transaction>(
-        this.url+'/'+transaction.id,
+        url,
         transaction,
       )
       .pipe(

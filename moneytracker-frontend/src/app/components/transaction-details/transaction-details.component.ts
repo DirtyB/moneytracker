@@ -19,18 +19,24 @@ export class TransactionDetailsComponent implements OnInit {
     private location: Location
   ) { }
 
-  getTransaction(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
+  getTransaction(id: number): void {
     this.transactionService.getTransaction(id)
-      .subscribe(transaction => this.transaction = transaction);
+      .subscribe(transaction => this.onTransactionReceived(transaction));
+  }
+
+  onTransactionReceived(t: Transaction): void {
+    if(!t){
+      this.goBack();
+    }
+    this.transaction = t;
   }
 
   goBack(): void {
     this.location.back();
   }
 
-  save(): void{
-    this.transactionService.updateTransaction(this.transaction)
+  save(): void {
+    this.transactionService.saveTransaction(this.transaction)
       .subscribe(() => this.goBack());
   }
 
@@ -40,7 +46,18 @@ export class TransactionDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getTransaction();
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id === "new") {
+      this.transaction = {
+        amount: null,
+        description: null,
+        date: null,
+        id: null,
+      };
+    } else {
+      this.getTransaction(+id);
+    }
+
   }
 
 }
