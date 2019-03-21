@@ -18,6 +18,11 @@ export class TransactionsComponent implements OnInit {
       .subscribe(transactions => this.transactions = transactions);
   }
 
+  deleteTransaction(id: number){
+    this.transactionService.deleteTransaction(id)
+      .subscribe(() => this.getTransactions());
+  }
+
   ngOnInit() {
     this.getTransactions();
   }

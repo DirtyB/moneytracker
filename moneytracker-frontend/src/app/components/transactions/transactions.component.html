@@ -4,5 +4,9 @@
     <a routerLink="/transactions/{{transaction.id}}">
       <span class="badge">{{transaction.amount}}</span> {{transaction.date}}  {{transaction.description}}
     </a>
+    <button (click)="deleteTransaction(transaction.id)">Delete</button>
   </li>
 </ul>
+<p>
+  <button (click)="getTransactions()">Refresh</button>
+</p>

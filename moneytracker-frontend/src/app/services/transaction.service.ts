@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Transaction} from "../models/Transaction";
 import {Observable, of} from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {catchError} from "rxjs/operators";
+import {HttpClient, HttpHeaders, HttpResponse} from "@angular/common/http";
+import {catchError, map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +36,14 @@ export class TransactionService {
       )
       .pipe(
         catchError(this.handleError<Transaction>())
+      );
+  }
+
+  deleteTransaction(id: number): Observable<boolean> {
+    return this.http.delete<null>(this.url+'/'+id, { observe: "response" })
+      .pipe(
+        map(response => (response.status === 200)),
+        catchError(this.handleError<boolean>(false)),
       );
   }
 

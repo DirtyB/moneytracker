@@ -12,5 +12,10 @@
     <input [(ngModel)]="transaction.date" placeholder="When did it happen?"/>
   </p>
 </div>
-<button (click)="goBack()">Go back</button>
-<button (click)="save()">Save</button>
+<p>
+  <button (click)="save()">Save</button>
+  <button (click)="delete()">Delete</button>
+</p>
+<p>
+  <button (click)="goBack()">Go back</button>
+</p>

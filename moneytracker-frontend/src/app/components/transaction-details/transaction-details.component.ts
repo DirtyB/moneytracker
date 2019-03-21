@@ -34,6 +34,11 @@ export class TransactionDetailsComponent implements OnInit {
       .subscribe(() => this.goBack());
   }
 
+  delete(): void{
+    this.transactionService.deleteTransaction(this.transaction.id)
+      .subscribe(() => this.goBack());
+  }
+
   ngOnInit() {
     this.getTransaction();
   }
